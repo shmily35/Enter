@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>王亚宇</title>
+    <link rel="icon" href="Resource/icon.png" />
+    <link rel="stylesheet" href="ExternalStyle.css">
+    <!--页内样式-->
+    <style>
+        .Load_sec{
+            text-align: center;
+            margin-top: 100px;
+        }
+        .form_div{
+            background: white;
+            width: 90%;
+            margin: 0 auto;
+            border: 1px solid#cccccc;
+            border-radius: 5px;
+            height: 100px;
+            margin-top: 30px;
+        }
+
+        .form_div span{
+            font-size: 20px;
+            padding-left: 15px;
+            line-height: 50px;
+        }
+
+        .account_div{
+            border-bottom: 1px solid#cccccc;
+        }
+
+        input{
+            outline: medium;
+            background: transparent;
+            border: 0;
+        }
+
+        .but_div{
+            height: 50px;
+            background: rgb(36,92,161);
+            width: 90%;
+            border-radius: 10px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .but_div input{
+            line-height: 50px;
+            font-size: 30px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<header class="DS_header">
+    <span>登录</span>
+</header>
+
+<!--第二部分-->
+<div class="Load_sec">
+    <img class="Load_head" src="Resource/head.png">
+</div>
+<!--第三部分-->
+<form>
+    <div class="form_div">
+        <div class="account_div">
+            <span>账号</span>
+            <input id="acc_input" type="text" name="account"><br>
+        </div>
+        <div class="password_div">
+            <span>密码</span>
+            <input id="pass_input" type="password" name="password"><br>
+        </div>
+    </div>
+
+    <div class="but_div">
+        <input type="button" value="登录" id="L_BUT">
+    </div>
+
+</form>
+
+<script>
+    var btn =document.querySelector("#L_BUT");
+    btn.onclick=function () {
+        var userName = document.querySelector("#acc_input").value;
+        var passWord = document.querySelector("#pass_input").value;
+
+        var par ="username="+userName+"&pwd="+passWord;
+
+        //创建一个请求对象
+        var xhr = new XMLHttpRequest();
+        //建立与服务器的连接
+        xhr.open('post','https://mockapi.eolinker.com/2ZhGVxjacb39010e6753bd9c02ee803e6e3bfeab6e8007c/login');
+        //设置头信息
+        xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+        //发送请求
+        xhr.send(par);
+        //接收数据
+        xhr.onreadystatechange = function () {
+            //监听返回状态
+            //xhr.readyState == 4 代表数据请求完成
+            //xhr.status == 200   代表数据返回成功
+            if(xhr.readyState == 4 && xhr.status == 200){
+                var reData = JSON.parse(xhr.responseText);
+                var str = reData.data;
+                if(str == "登录成功"){
+                    window.location.href="PostgraduateService.html"
+                }else{
+                    alert(str);
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+
+</html>
+
+
